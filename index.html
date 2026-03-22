@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cruelvows | Professional Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>Cruelvows | My Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
         :root {
-            --bg: #0f1115;
-            --card-bg: rgba(255, 255, 255, 0.04);
-            --primary: #94a3b8; /* Slate Blue-Grey */
-            --accent: #82a098;  /* Muted Sage */
-            --text-main: #f8fafc;
-            --text-dim: #94a3b8;
-            --border: rgba(255, 255, 255, 0.08);
+            --bg: #0b0c10;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            /* Brighter colors to stand out */
+            --accent-1: #6366f1; /* Bright Indigo */
+            --accent-2: #22d3ee; /* Bright Cyan */
+            --text-main: #ffffff;
+            --text-dim: #cbd5e1;
+            --border: rgba(255, 255, 255, 0.12);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -28,154 +29,156 @@
             display: flex;
             justify-content: center;
             overflow-x: hidden;
-            position: relative;
         }
 
-        /* Animated Aurora Background (Non-hacker, purely aesthetic) */
-        .aurora {
+        /* Stronger Animated Background */
+        .background-animate {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
-            filter: blur(100px);
-            opacity: 0.4;
-            overflow: hidden;
+            filter: blur(80px);
+            opacity: 0.6; /* Made it more visible */
         }
-        .blob {
+        .light-blob {
+            position: absolute;
+            width: 600px; height: 600px;
+            background: var(--accent-1);
+            border-radius: 50%;
+            top: -10%; left: -10%;
+            animation: moveAround 15s infinite alternate;
+        }
+        .light-blob-2 {
             position: absolute;
             width: 500px; height: 500px;
-            background: var(--accent);
+            background: var(--accent-2);
             border-radius: 50%;
-            animation: move 20s infinite alternate;
+            bottom: -10%; right: -10%;
+            animation: moveAround 20s infinite alternate-reverse;
         }
-        .blob-2 {
-            background: #334155;
-            right: 0; bottom: 0;
-            animation: move 25s infinite alternate-reverse;
-        }
-        @keyframes move {
-            from { transform: translate(-10%, -10%); }
-            to { transform: translate(20%, 20%); }
+        @keyframes moveAround {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30%, 20%) scale(1.2); }
         }
 
-        .container { max-width: 800px; width: 90%; margin: 80px 0; animation: fadeIn 1.2s ease; }
+        .container { max-width: 800px; width: 90%; margin: 60px 0; animation: fadeIn 0.8s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* Top Header */
+        header { margin-bottom: 50px; }
+        .label { color: var(--accent-2); font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; display: block; }
+        h1 { font-size: 4rem; font-weight: 800; letter-spacing: -2px; margin-bottom: 15px; }
+        .intro-text { font-size: 1.2rem; color: var(--text-dim); line-height: 1.5; max-width: 600px; }
 
-        /* Header */
-        header { text-align: left; margin-bottom: 60px; }
-        h1 { font-size: 4rem; font-weight: 800; letter-spacing: -3px; margin-bottom: 10px; color: #fff; }
-        .subtitle { color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 4px; font-size: 0.8rem; }
-
-        /* Stats - 3 Boxes Only */
-        .stats-row { 
+        /* 3 Main Stats */
+        .stats-grid { 
             display: grid; grid-template-columns: repeat(3, 1fr); 
-            gap: 20px; margin-bottom: 50px;
+            gap: 15px; margin-bottom: 40px;
         }
-        .stat-card {
+        .stat-box {
             background: var(--card-bg); border: 1px solid var(--border);
-            padding: 30px; border-radius: 24px; backdrop-filter: blur(10px);
+            padding: 25px; border-radius: 20px; backdrop-filter: blur(10px);
             text-align: center;
         }
-        .stat-card b { display: block; font-size: 1.8rem; margin-bottom: 5px; color: #fff; }
-        .stat-card span { font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; font-weight: 700; letter-spacing: 1px; }
+        .stat-box b { display: block; font-size: 1.8rem; margin-bottom: 5px; color: #fff; }
+        .stat-box span { font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; font-weight: 600; }
 
-        /* Main Sections */
-        .section-label { font-size: 0.75rem; font-weight: 800; color: var(--text-dim); text-transform: uppercase; letter-spacing: 3px; margin: 40px 0 20px 0; display: block; }
+        /* Sections */
+        .heading { font-size: 1.2rem; font-weight: 800; margin: 40px 0 20px 0; display: block; }
         
-        .glass-card {
+        .box {
             background: var(--card-bg); border: 1px solid var(--border);
-            padding: 40px; border-radius: 30px; backdrop-filter: blur(20px);
-            margin-bottom: 30px;
+            padding: 35px; border-radius: 25px; backdrop-filter: blur(20px);
+            margin-bottom: 25px;
         }
-        .project-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 15px; color: #fff; }
-        .project-desc { color: var(--text-dim); line-height: 1.8; margin-bottom: 30px; }
+        .title { font-size: 1.6rem; font-weight: 800; margin-bottom: 10px; }
+        .desc { color: var(--text-dim); line-height: 1.7; margin-bottom: 25px; }
         
-        .action-btn {
-            display: inline-flex; align-items: center; gap: 12px;
-            padding: 14px 28px; background: #fff; color: #000;
-            border-radius: 14px; text-decoration: none; font-weight: 700;
-            transition: 0.3s; font-size: 0.9rem;
+        .btn {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 12px 24px; background: #fff; color: #000;
+            border-radius: 12px; text-decoration: none; font-weight: 800;
+            transition: 0.2s; font-size: 0.9rem;
         }
-        .action-btn:hover { background: var(--accent); color: #fff; transform: translateY(-2px); }
+        .btn:hover { background: var(--accent-2); transform: scale(1.05); }
 
-        .skill-grid { display: flex; flex-wrap: wrap; gap: 12px; }
-        .skill-tag { background: rgba(255,255,255,0.03); padding: 10px 20px; border-radius: 14px; border: 1px solid var(--border); font-size: 0.9rem; }
+        .tag-group { display: flex; flex-wrap: wrap; gap: 10px; }
+        .tag { background: rgba(255,255,255,0.05); padding: 8px 16px; border-radius: 12px; border: 1px solid var(--border); font-size: 0.9rem; font-weight: 600; }
 
-        /* 5-Social Layout */
-        .social-hub {
-            display: grid; grid-template-columns: repeat(6, 1fr); gap: 15px;
+        /* 5-Socials Layout */
+        .social-row {
+            display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px;
         }
-        .social-item {
+        .social-link {
             grid-column: span 2;
             background: var(--card-bg); border: 1px solid var(--border);
-            padding: 22px; border-radius: 20px; display: flex; align-items: center; gap: 15px;
-            text-decoration: none; color: #fff; transition: 0.3s;
+            padding: 20px; border-radius: 15px; display: flex; align-items: center; gap: 12px;
+            text-decoration: none; color: #fff; transition: 0.2s;
         }
-        .social-item:nth-child(4) { grid-column: 2 / span 2; }
-        .social-item:nth-child(5) { grid-column: 4 / span 2; }
+        .social-link:nth-child(4) { grid-column: 2 / span 2; }
+        .social-link:nth-child(5) { grid-column: 4 / span 2; }
 
-        .social-item:hover { border-color: var(--accent); background: rgba(255,255,255,0.06); }
-        .social-item i { color: var(--accent); font-size: 1.3rem; }
-        .static { cursor: text; }
+        .social-link:hover { border-color: #fff; background: rgba(255,255,255,0.1); }
+        .social-link i { color: var(--accent-2); font-size: 1.2rem; }
+        .static { cursor: default; }
 
-        @media (max-width: 768px) {
-            .stats-row { grid-template-columns: 1fr; }
-            .social-hub { display: flex; flex-direction: column; }
+        @media (max-width: 600px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .social-row { display: flex; flex-direction: column; }
             h1 { font-size: 3rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="aurora">
-        <div class="blob"></div>
-        <div class="blob-2"></div>
+    <div class="background-animate">
+        <div class="light-blob"></div>
+        <div class="light-blob-2"></div>
     </div>
 
     <div class="container">
         <header>
-            <p class="subtitle">Operations Director</p>
+            <span class="label">Moderator & Developer</span>
             <h1>cruelvows</h1>
-            <p style="color: var(--text-dim); max-width: 500px; font-size: 1.1rem; line-height: 1.6;">Strategic community management and technical development for large-scale digital environments.</p>
+            <p class="intro-text">I manage large game communities and build my own software tools.</p>
         </header>
 
-        <div class="stats-row">
-            <div class="stat-card"><b>8 Hours</b><span>Daily Active</span></div>
-            <div class="stat-card"><b>GMT</b><span>Timezone</span></div>
-            <div class="stat-card"><b>1 Year+</b><span>Tenure</span></div>
+        <div class="stats-grid">
+            <div class="stat-box"><b>8 Hours</b><span>Active Daily</span></div>
+            <div class="stat-box"><b>GMT</b><span>Timezone</span></div>
+            <div class="stat-box"><b>1 Year+</b><span>Experience</span></div>
         </div>
 
-        <span class="section-label">Core Projects</span>
-        <div class="glass-card">
-            <h2 class="project-title">Survive And Kill The Killers In Area 51!</h2>
-            <p class="project-desc">Leading the moderation team for one of the most recognized classic experiences on the platform. Responsible for staff oversight, community policy development, and maintaining player safety standards for thousands of active sessions.</p>
-            <a href="https://www.roblox.com/games/155382109/Survive-and-Kill-the-Killers-in-Area-51" target="_blank" class="action-btn">
-                Open Experience <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        <span class="heading">Featured Projects</span>
+        <div class="box">
+            <h2 class="title">Survive And Kill The Killers In Area 51!</h2>
+            <p class="desc">I am the Head Moderator for this classic game. I lead the staff team, make sure players follow the rules, and keep the game safe for everyone every day.</p>
+            <a href="https://www.roblox.com/games/155382109/Survive-and-Kill-the-Killers-in-Area-51" target="_blank" class="btn">
+                Visit Game <i class="fa-solid fa-external-link"></i>
             </a>
         </div>
 
-        <span class="section-label">Expertise</span>
-        <div class="glass-card" style="padding: 30px;">
-            <div class="skill-grid">
-                <div class="skill-tag">Python</div>
-                <div class="skill-tag">C++</div>
-                <div class="skill-tag">JavaScript</div>
-                <div class="skill-tag">HTML / CSS</div>
-                <div class="skill-tag">Luau</div>
+        <span class="heading">Coding Skills</span>
+        <div class="box" style="padding: 25px;">
+            <div class="tag-group">
+                <div class="tag">Python</div>
+                <div class="tag">C++</div>
+                <div class="tag">JavaScript</div>
+                <div class="tag">HTML / CSS</div>
+                <div class="tag">Luau</div>
             </div>
         </div>
 
-        <span class="section-label">Contact & Socials</span>
-        <div class="social-hub">
-            <div class="social-item static"><i class="fa-brands fa-discord"></i><span>cruelvows</span></div>
-            <div class="social-item static"><i class="fa-solid fa-envelope"></i><span>cruelvows@gmail.com</span></div>
-            <a href="https://x.com/cruelvows" target="_blank" class="social-item"><i class="fa-brands fa-twitter"></i><span>Twitter</span></a>
-            <a href="https://www.roblox.com/users/564976601/profile" target="_blank" class="social-item"><i class="fa-solid fa-user"></i><span>Roblox</span></a>
-            <a href="https://devforum.roblox.com/u/awesumpossm" target="_blank" class="social-item"><i class="fa-solid fa-code"></i><span>DevForum</span></a>
+        <span class="heading">Contact Me</span>
+        <div class="social-row">
+            <div class="social-link static"><i class="fa-brands fa-discord"></i><span>cruelvows</span></div>
+            <div class="social-link static"><i class="fa-solid fa-envelope"></i><span>cruelvows@gmail.com</span></div>
+            <a href="https://x.com/cruelvows" target="_blank" class="social-link"><i class="fa-brands fa-twitter"></i><span>Twitter</span></a>
+            <a href="https://www.roblox.com/users/564976601/profile" target="_blank" class="social-link"><i class="fa-solid fa-user"></i><span>Roblox</span></a>
+            <a href="https://devforum.roblox.com/u/awesumpossm" target="_blank" class="social-link"><i class="fa-solid fa-code"></i><span>DevForum</span></a>
         </div>
 
-        <footer style="text-align: center; margin-top: 100px; color: #334155; font-size: 0.75rem; font-weight: 700; letter-spacing: 2px;">
-            ESTABLISHED 2026 // CRUELVOWS
+        <footer style="text-align: center; margin-top: 100px; color: #444; font-size: 0.8rem; font-weight: bold; letter-spacing: 2px;">
+            MADE BY CRUELVOWS &bull; 2026
         </footer>
     </div>
 
