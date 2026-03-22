@@ -4,145 +4,164 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cruelvows | Operations & Dev</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
         :root {
-            --primary: #c397ff;
-            --accent: #00ffa3;
-            --glass: rgba(10, 10, 20, 0.75);
+            --primary: #c397ff; /* Soft Midnight Purple */
+            --accent: #00ffaa;  /* Electric Mint Green */
+            --bg-dark: #06050a; /* Dark Slate */
+            --glass: rgba(16, 12, 26, 0.85);
             --border: rgba(255, 255, 255, 0.08);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            font-family: 'Outfit', sans-serif;
-            color: #fff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #d1d1ff;
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            background: url('http://googleusercontent.com/image_collection/image_retrieval/13983208324382556385_0') no-repeat center center fixed;
-            background-size: cover;
+            overflow-x: hidden;
+            background-color: var(--bg-dark);
+            perspective: 1000px; /* Essential for 3D card tilt */
         }
 
-        .overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(8px);
-            z-index: -1;
-        }
+        /* The Animated Particle Background */
+        #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
 
-        .container { max-width: 850px; width: 90%; margin: 60px 0; animation: fadeIn 0.8s ease-out; }
+        .container { max-width: 900px; width: 95%; margin: 60px 0; animation: fadeIn 0.8s ease-out; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
         header { 
             background: var(--glass); border: 1px solid var(--border);
-            padding: 40px; border-radius: 30px; text-align: center; margin-bottom: 30px;
+            padding: 50px; border-radius: 25px; text-align: center; margin-bottom: 30px;
+            backdrop-filter: blur(20px); box-shadow: 0 10px 40px rgba(0,0,0,0.4);
         }
-        h1 { font-size: 3.5rem; letter-spacing: -2px; margin-bottom: 5px; background: linear-gradient(to bottom, #fff, #b29dff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .role-tag { color: var(--accent); font-weight: bold; letter-spacing: 4px; font-size: 0.8rem; text-transform: uppercase; }
+        h1 { 
+            font-size: 3.8rem; letter-spacing: -3px; margin-bottom: 5px; font-weight: 800;
+            background: linear-gradient(to bottom, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
+        }
+        .header-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--accent); font-weight: bold; letter-spacing: 3px; text-transform: uppercase; }
+        .header-tag::after { content: ""; display: inline-block; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; margin-left: 10px; box-shadow: 0 0 15px var(--accent); animation: pulse 2s infinite; }
 
-        /* Stats Section */
-        .stats-row { 
+        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.3; transform: scale(0.9); } }
+
+        /* Stats Section - Glowing Cards */
+        .stats-grid { 
             display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); 
             gap: 15px; margin-bottom: 30px;
         }
         .stat-card {
             background: var(--glass); border: 1px solid var(--border);
-            padding: 20px; border-radius: 20px; text-align: center;
+            padding: 25px; border-radius: 20px; text-align: center; transition: 0.4s ease;
         }
-        .stat-card b { display: block; font-size: 1.6rem; color: var(--primary); }
-        .stat-card span { font-size: 0.7rem; color: #888; text-transform: uppercase; font-weight: 700; }
+        .stat-card:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 5px 30px rgba(0, 255, 170, 0.15); }
+        .stat-card b { display: block; font-size: 1.8rem; color: #fff; margin-bottom: 5px; }
+        .stat-card span { font-size: 0.75rem; color: #888; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; }
 
         /* Project Display */
-        .section-header { margin: 40px 0 20px 10px; font-size: 1.2rem; color: #aaa; text-transform: uppercase; letter-spacing: 2px; }
+        .section-header { margin: 40px 0 20px 10px; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 3px; font-weight: bold; font-family: 'JetBrains Mono'; }
 
-        .project-card {
-            background: var(--glass); border: 1px solid var(--border);
-            padding: 30px; border-radius: 25px; transition: 0.3s ease;
+        .glitch-card {
+            background: rgba(16, 12, 26, 0.9); border: 1px solid var(--border);
+            padding: 35px; border-radius: 25px; transition: 0.2s ease;
             text-decoration: none; color: inherit; display: block;
+            transform-style: preserve-3d; transition: 0.1s; /* Important for JS tilt */
         }
-        .project-card:hover { transform: translateY(-5px); border-color: var(--primary); background: rgba(195, 151, 255, 0.05); }
-        .project-title { font-size: 1.6rem; font-weight: 700; margin-bottom: 10px; color: #fff; }
-        .project-badge { display: inline-block; background: var(--primary); color: #000; padding: 4px 12px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; margin-bottom: 15px; }
+        .glitch-card h2 { font-size: 1.6rem; color: #fff; font-weight: 700; margin-bottom: 15px; }
+        .glitch-card:hover { border-color: var(--primary); box-shadow: 0 10px 40px rgba(195, 151, 255, 0.1); }
+        .glitch-card .badge { display: inline-block; background: var(--accent); color: #000; padding: 5px 15px; border-radius: 6px; font-size: 0.75rem; font-weight: 800; margin-bottom: 15px; text-transform: uppercase; }
 
         /* Tech Section */
-        .tech-card {
+        .tech-box {
             background: var(--glass); border: 1px solid var(--border);
             padding: 30px; border-radius: 25px; margin-top: 30px;
         }
         .tech-list { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
-        .tech-tag { border: 1px solid var(--accent); padding: 6px 15px; border-radius: 10px; font-size: 0.8rem; font-family: 'JetBrains Mono'; color: var(--accent); }
+        .tech-tag { background: rgba(0, 255, 170, 0.05); border: 1px solid rgba(0, 255, 170, 0.2); padding: 7px 18px; border-radius: 50px; font-size: 0.85rem; font-family: 'JetBrains Mono'; color: var(--accent); }
 
-        /* The 5-Social Layout (The Hub) */
-        .social-hub {
-            display: flex; flex-wrap: wrap; justify-content: center;
-            gap: 12px; margin-top: 20px;
+        /* 5-Social Access Panel */
+        .access-hub {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 20px;
         }
-        .social-box {
+        .social-item {
             background: rgba(255,255,255,0.03); border: 1px solid var(--border);
-            padding: 16px 20px; border-radius: 16px; display: flex; align-items: center; gap: 12px;
-            text-decoration: none; color: #fff; font-size: 0.85rem; transition: 0.3s;
-            flex: 1 1 calc(33.33% - 12px); /* 3 items per row */
-            min-width: 200px;
+            padding: 18px; border-radius: 12px; display: flex; align-items: center; gap: 12px;
+            text-decoration: none; color: #fff; font-size: 0.85rem; transition: 0.2s;
         }
-        .social-box:hover { border-color: var(--primary); background: rgba(195, 151, 255, 0.08); transform: translateY(-3px); }
-        .social-box i { color: var(--primary); font-size: 1.2rem; }
+        .social-item:hover { border-color: var(--primary); background: rgba(195, 151, 255, 0.05); transform: translateY(-3px); }
+        .social-item i { color: var(--primary); font-size: 1.2rem; }
         .static { cursor: text; }
 
-        @media (max-width: 600px) { .social-box { flex: 1 1 100%; } h1 { font-size: 2.5rem; } }
+        @media (max-width: 768px) { .access-hub { grid-template-columns: 1fr 1fr; } .glitch-card { grid-template-columns: 1fr; } h1 { font-size: 2.8rem; } }
     </style>
 </head>
 <body>
 
-    <div class="overlay"></div>
+    <div id="particles-js"></div>
 
     <div class="container">
         <header>
-            <p class="role-tag">Staff Lead & Software Engineering</p>
+            <p class="header-tag">Systems Operations</p>
             <h1>cruelvows</h1>
-            <p style="color: #888; margin-top: 10px;">Managing large-scale communities with a technical edge.</p>
+            <p style="color: #999; margin-top: 10px; font-size: 1.1rem;">Bridging the gap between active game communities and systems engineering.</p>
         </header>
 
-        <div class="stats-row">
-            <div class="stat-card"><b>8H</b><span>Daily Active</span></div>
+        <div class="stats-grid">
+            <div class="stat-card"><b>8 Hours</b><span>Daily Active</span></div>
             <div class="stat-card"><b>GMT</b><span>Timezone</span></div>
-            <div class="stat-card"><b>1YR+</b><span>Experience</span></div>
+            <div class="stat-card"><b>1 Year+</b><span>Tenure</span></div>
             <div class="stat-card"><b>Full Stack</b><span>Developer</span></div>
         </div>
 
-        <p class="section-header">Active Operations</p>
-        <a href="https://www.roblox.com/games/155382109/Survive-and-Kill-the-Killers-in-Area-51" target="_blank" class="project-card">
-            <span class="project-badge">HEAD MODERATOR</span>
-            <div class="project-title">Survive And Kill The Killers In Area 51!</div>
-            <p style="color: #999; line-height: 1.6;">Directing moderation protocols and staff coordination for a classic high-volume experience. Specialized in incident response and maintaining platform compliance across thousands of daily sessions.</p>
-            <div style="margin-top: 20px; color: var(--accent); font-weight: bold; font-size: 0.8rem;">OPEN PROJECT <i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+        <p class="section-header">Core Operations</p>
+        <a href="https://www.roblox.com/games/155382109/Survive-and-Kill-the-Killers-in-Area-51" target="_blank" class="glitch-card js-tilt" data-tilt>
+            <span class="badge">HEAD MODERATOR</span>
+            <h2>Survive And Kill The Killers In Area 51!</h2>
+            <p style="color: #b1b1c7; line-height: 1.7;">Directing moderation protocols for a legendary high-volume experience. Specialized in incident response, staff coordination, and platform compliance.</p>
+            <div style="margin-top: 25px; color: var(--accent); font-weight: bold; font-size: 0.9rem;">VIEW PROJECT DETAILS <i class="fa-solid fa-arrow-up-right-from-square"></i></div>
         </a>
 
-        <div class="tech-card">
+        <div class="tech-box">
             <p class="section-header" style="margin: 0 0 15px 0;">Technical Proficiency</p>
             <div class="tech-list">
                 <span class="tech-tag">Python</span><span class="tech-tag">C++</span><span class="tech-tag">JavaScript</span><span class="tech-tag">HTML</span><span class="tech-tag">Luau</span>
             </div>
         </div>
 
-        <p class="section-header">Network Access</p>
-        <div class="social-hub">
-            <div class="social-box static"><i class="fa-brands fa-discord"></i><span>cruelvows</span></div>
-            <div class="social-box static"><i class="fa-solid fa-envelope"></i><span>cruelvows@gmail.com</span></div>
-            <a href="https://x.com/cruelvows" target="_blank" class="social-box"><i class="fa-brands fa-twitter"></i><span>Twitter</span></a>
-            
-            <a href="https://www.roblox.com/users/564976601/profile" target="_blank" class="social-box"><i class="fa-solid fa-user"></i><span>Roblox Profile</span></a>
-            <a href="https://devforum.roblox.com/u/awesumpossm" target="_blank" class="social-box"><i class="fa-solid fa-code"></i><span>DevForum</span></a>
+        <p class="section-header">Access Panel // Secured_Connections</p>
+        <div class="access-hub">
+            <div class="social-item static"><i class="fa-brands fa-discord"></i><span>cruelvows</span></div>
+            <div class="social-item static"><i class="fa-solid fa-envelope"></i><span>cruelvows@gmail.com</span></div>
+            <a href="https://x.com/cruelvows" target="_blank" class="social-item"><i class="fa-brands fa-twitter"></i><span>Twitter</span></a>
+            <a href="https://www.roblox.com/users/564976601/profile" target="_blank" class="social-item"><i class="fa-solid fa-user"></i><span>Roblox Profile</span></a>
+            <a href="https://devforum.roblox.com/u/awesumpossm" target="_blank" class="social-item"><i class="fa-solid fa-code"></i><span>DevForum</span></a>
         </div>
 
-        <footer style="text-align: center; margin-top: 80px; color: #444; font-size: 0.7rem; letter-spacing: 3px;">
-            SECURE_DATA_CRUELVOWS_2026
+        <footer style="text-align: center; margin-top: 80px; color: #333; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; letter-spacing: 2px;">
+            DESIGNED BY CRUELVOWS // 2026 // SECURE_PORTFOLIO_V10.1
         </footer>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tilt.js@1.2.1/dest/tilt.jquery.min.js"></script>
+    <script>
+        /* Particles.js background setup */
+        particlesJS("particles-js", { "particles": { "number": { "value": 70 }, "color": { "value": "#00ffaa" }, "shape": { "type": "circle" }, "opacity": { "value": 0.2 }, "size": { "value": 2.5 }, "line_linked": { "enable": true, "distance": 150, "color": "#c397ff", "opacity": 0.15, "width": 1 }, "move": { "enable": true, "speed": 1 } }, "interactivity": { "events": { "onhover": { "enable": true, "mode": "grab" } } } });
+        
+        /* 3D Card Tilt setup */
+        $(document).ready(function(){
+            $('.js-tilt').tilt({
+                scale: 1.05, // Slightly scales up on hover
+                glare: true, // Adds a sheen on the card
+                maxGlare: 0.3 // Max opacity of the shine
+            });
+        });
+    </script>
 </body>
 </html>
